@@ -1,0 +1,179 @@
+---
+author: Kuash Kumar Gupta (22167817)
+date: "`r Sys.Date()`"
+output: html_document
+title: COMP7024 Assignment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse) 
+library(kableExtra)
+```
+By including this statement, we the authors of this work, verify that:
+
+- We hold a copy of this assignment that we can produce if the original is lost or
+damaged.
+- We hereby certify that no part of this assignment/product has been copied from
+any other student’s work or from any other source except where due acknowledgement
+is made in the assignment.
+- No part of this assignment/product has been written/produced for us by another
+person except where such collaboration has been authorised by the subject lecturer/
+tutor concerned.
+- We are aware that this work may be reproduced and submitted to plagiarism detection
+software programs for the purpose of detecting possible plagiarism (which
+may retain a copy on its database for future plagiarism checking).
+- We hereby certify that we have read and understand what the School of Computing,
+Engineering and Mathematics defines as minor and substantial breaches
+of misconduct as outlined in the learning guide for this unit.
+
+# Declaration
+
+I confirm that this submission is my own work and complies with course requirements.
+
+---
+
+# Question 1 – Product Revenue Analysis
+
+## What I Did
+
+- Removed cancelled transactions where `InvoiceNo` begins with “C” to ensure only valid sales were included.
+- Joined 'project_orders.csv' and 'project_product_info.csv' using 'StockCode' as the primary key.
+- Calculated revenue for each transaction using:
+
+  Revenue = Quantity × UnitPrice
+
+- Aggregated total revenue by product (StockCode and Description).
+- Ranked products to identify the top 10 and bottom 10 performers.
+- Calculated the percentage contribution of the top three products to total revenue.
+
+## Code
+
+```{r}
+source("../R/02_q1_products.R")
+```
+
+## Interpretation
+
+The top three products contribute **5.16% of total revenue**, indicating that revenue is not highly concentrated among a small number of products.
+
+This suggests a diversified revenue structure where sales are distributed across many items rather than being dominated by a few bestsellers. From a risk management perspective, this reduces dependency on individual products and lowers vulnerability if one product underperforms.
+
+However, the absence of dominant products may also suggest limited product differentiation or strong competition across the catalogue. Strategic promotion of high-performing items could increase their revenue contribution while maintaining portfolio diversification.
+
+---
+
+# Question 2 – High-Value Customers
+
+## What I Did
+
+- Removed observations with missing CustomerID.
+- Calculated total spending per customer using aggregated revenue.
+- Ranked customers to identify the top five highest-value customers.
+- Analysed purchasing behaviour of these customers by summarising total quantities purchased per product.
+- Visualised purchasing patterns using faceted bar charts.
+
+## Code
+
+```{r}
+source("../R/03_q2_customers.R")
+```
+
+## Interpretation
+
+The top five customers show significant spending concentration:
+
+- Customer 14646: $280,206.00  
+- Customer 18102: $259,657.30  
+- Customer 17450: $194,550.80  
+- Customer 16446: $168,472.50  
+- Customer 14911: $143,825.10  
+
+The noticeable spending gap between the highest and lowest ranked customers in the top five indicates moderate revenue concentration at the customer level.
+
+This presents both opportunity and risk. High-value customers represent strong candidates for retention strategies such as loyalty programs or personalised marketing. However, reliance on a limited number of major customers increases vulnerability if churn occurs.
+
+The purchasing patterns suggest bulk-buying behaviour, potentially indicating business or wholesale customers. Tailored pricing strategies or long-term contracts could strengthen these relationships.
+
+---
+
+# Question 3 – Country-Level Market Analysis
+
+## What I Did
+
+- Aggregated total revenue by country.
+- Ranked countries in descending order of revenue.
+- Identified the highest-quantity product within each country.
+- Visualised the top 10 revenue-generating countries.
+
+## Code
+
+```{r}
+source("../R/04_q3_countries.R")
+```
+
+## Interpretation
+
+The **United Kingdom generated $9,003,097.96**, making it the dominant revenue source.
+
+This indicates strong geographic concentration within a single market. While this demonstrates brand strength and demand stability in the UK, it also introduces geographic risk exposure.
+
+If revenue from other countries is significantly lower, this suggests limited international diversification. Expanding into mid-performing markets could reduce dependence on the UK and improve long-term stability.
+
+Variation in top-selling products across countries further supports the importance of region-specific marketing and inventory strategies rather than a uniform global approach.
+
+---
+
+# Question 4 – Time Trend & Consistently Low-Selling Products
+
+## What I Did
+
+- Converted InvoiceDate to proper datetime format.
+- Extracted Year-Month values for time-series analysis.
+- Calculated total monthly revenue.
+- Identified the top three revenue-generating months.
+- Determined products consistently appearing in the monthly bottom 10 revenue ranking.
+- Counted the number of months each product appeared in the bottom 10.
+
+## Code
+
+```{r}
+source("../R/05_q4_time_trends.R")
+```
+
+## Interpretation
+
+The highest revenue months were:
+
+- December 2009 ($254,506.80)
+- December 2007 ($175,057.40)
+- December 2008 ($127,885.00)
+
+The consistent dominance of December across multiple years strongly indicates seasonal demand effects, likely driven by holiday-related purchasing behaviour and end-of-year promotions.
+
+This suggests that inventory planning and marketing investment should increase prior to Q4 to capitalise on predictable revenue spikes.
+
+Additionally, several products consistently underperformed:
+
+- KITTY PENCIL ERASERS (25 months in bottom 10)
+- SLEEPING CAT ERASERS (22 months in bottom 10)
+- SET 12 RETRO WHITE CHALK STICKS (20 months in bottom 10)
+
+These products exhibit structural low demand rather than temporary fluctuations. Persistently weak products may increase inventory holding costs and reduce operational efficiency.
+
+Strategic responses could include bundling, discounting, repositioning, or discontinuation if profitability remains consistently low.
+
+Overall, the time-series analysis highlights both predictable seasonal peaks and structural underperformance among specific products.
+
+---
+
+# Conclusion
+
+The analysis demonstrates diversified product revenue, moderate customer concentration, strong geographic dependence on the United Kingdom, clear seasonal demand patterns in December, and a subset of persistently low-performing products requiring strategic review.
+
+Collectively, these insights provide actionable recommendations for inventory management, customer retention strategies, geographic expansion, and product portfolio optimisation.
+
+------------------------------------------------------------------------
+
+I confirm that: - I understand all code submitted. - I can explain my
+solution if required.
